@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <style>
+            #main{
+                text-align: center;
+            }
+            #progress-container{
+                border: 1px solid black;
+                width: 600px;
+                height: 20px;
+                margin: 50px auto;
+                margin-bottom: 10px;
+            }
+            #progress{
+                height: 100%;
+                background-color: rgb(83, 83, 247);
+                width: 0;
+                transition: width 0.3s ease;
+            }
+        </style>
+        <title>Progress Bar</title>
+    </head>
+    <body>
+        <div id="main">
+            <h2>Progressbar</h2>
+            <div id="progress-container">
+                <div id="progress"></div>
+            </div>
+            <div id="show-progress"></div>
+        </div>
+    </body>
+    <script>{
+        let prodressPercent = 1;
+        // document.getElementById('progress-container').innerHTML = 'Hello';
+        let progressFiller = document.getElementById('progress');
+        let setIntervalId = setInterval(()=>{
+            prodressPercent += 1;
+            progressFiller.style.setProperty('width', `${prodressPercent}%`);
+            document.getElementById('show-progress').innerHTML = `${prodressPercent} %`;
+
+            if(prodressPercent >= 100) clearInterval(setIntervalId)
+            
+        }, 20);
+
+       
+    }</script>
+</html>
