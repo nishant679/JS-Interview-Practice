@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanilla JS Folder Explorer</title>
+  <style>
+    body { font-family: sans-serif; background: #f7f7f7; }
+    .explorer { background: #fff; padding: 1rem; border-radius: 8px; max-width: 400px; margin: 2rem auto; box-shadow: 0 2px 8px #0001; }
+    ul { list-style: none; padding-left: 1em; }
+    .item { cursor: pointer; padding: 2px 6px; border-radius: 4px; display: flex; align-items: center; }
+    .item.selected { background: #e0e7ff; color: #1e40af; }
+    .icon { margin-right: 8px; }
+    .collapsed > ul { display: none; }
+    .item.file { cursor: default; }
+  </style>
+</head>
+<body>
+  <div class="explorer" id="explorer"></div>
+  <script>
+    const fileSystem = [
+      {
+        name: 'src',
+        type: 'folder',
+        children: [
+          { name: 'index.js', type: 'file' },
+          { name: 'components', type: 'folder', children: [
+            { name: 'Header.js', type: 'file' },
+            { name: 'Footer.js', type: 'file' },
+          ] },
+        ],
+      },
+      {
+        name: 'README.md',
+        type: 'file',
+      },
+    ];
+
+    function createTree(data, parentUl = null) {
+      const ul = document.createElement('ul');
+      data.forEach(item => {
+        const li = document.createElement('li');
+        const div = document.createElement('div');
+        div.className = 'item ' + item.type;
+        div.innerHTML = `<span class="icon">${item.type === 'folder' ? '📁' : '📄'}</span>${item.name}`;
+        li.appendChild(div);
+        if (item.type === 'folder' && item.children) {
+          li.classList.add('collapsed');
+          div.addEventListener('click', function(e) {
+            e.stopPropagation();
+            li.classList.toggle('collapsed');
+            selectItem(div);
+          });
+          li.appendChild(createTree(item.children, ul));
+        } else {
+          div.addEventListener('click', function(e) {
+            e.stopPropagation();
+            selectItem(div);
+          });
+        }
+        ul.appendChild(li);
+      });
+      return ul;
+    }
+
+    let selected = null;
+    function selectItem(div) {
+      if (selected) selected.classList.remove('selected');
+      selected = div;
+      selected.classList.add('selected');
+    }
+
+    document.getElementById('explorer').appendChild(createTree(fileSystem));
+  </script>
+</body>
+</html>
