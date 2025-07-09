@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <style>
+            body{
+                background-color: rgb(32, 36, 48);
+            }
+            #container{
+                width: auto;
+                height: auto;
+                text-align: center;
+                /* border: 1px solid black; */
+                margin: 250px 200px;
+                padding: auto;
+            }
+            #progress-container{
+                width: 500px;
+                height: 8px;
+                margin: auto;
+                border: 1px solid rgb(34, 34, 34);
+            }
+            #progress-bar{
+                background-color: rgb(23, 141, 251);
+                height: 100%;
+                width: 10px;
+                transition: width 0.3s ease;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <!-- <p>Show Progress</p> -->
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <div id="progress"></div>
+        </div>
+    </body>
+    <script>
+        {
+            let progressBar = document.getElementById('progress-bar');
+            let progressValue = document.getElementById('progress');
+            let progressPercent = 0;
+
+            let progressInterval = setInterval(()=>{
+                if(progressPercent < 100){
+                    progressPercent += 1;
+                    progressValue.innerHTML = `${progressPercent} %`;
+
+                    progressBar.style.setProperty('width', `${progressPercent}%`)
+                }else{
+                    clearInterval(progressInterval)
+                }
+            
+                
+            }, 20)
+
+        }
+    </script>
+</html>

@@ -1,0 +1,20 @@
+<html>
+    <head></head>
+    <body></body>
+    <script>
+        {
+            let posts = [];
+
+            let getPosts = () =>{
+                fetch('https://jsonplaceholder.typicode.com/posts').then((res)=>{
+                    // let response = JSON.parse(res);
+                    // posts = response.data || [];
+                    console.log("Posts", JSON.parse(res.body) )
+                });
+            }
+            getPosts();
+
+            
+        }
+    </script>
+</html>
